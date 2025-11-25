@@ -65,7 +65,7 @@
     <body>
 
         <?php 
-            require('./../header.php');
+            require('./../components/layout/header.php');
         ?>
         
         <div class="container">

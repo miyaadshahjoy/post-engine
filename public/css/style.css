@@ -54,7 +54,7 @@ img {
   width: 100%;
 }
 
-a,
+a:link,
 a:visited {
   color: var(--text-color);
   text-decoration: none;
@@ -116,7 +116,9 @@ a:visited {
   justify-content: space-between;
 }
 
-.header-logo {
+.header-logo:link,
+.header-logo:visited,
+.header-logo:active {
   text-decoration: none;
   color: var(--primary-color);
   font-size: 32px;
