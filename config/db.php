@@ -7,10 +7,8 @@
     $password = $env['DB_PASSWORD'];
     $conn = oci_connect($user, $password , $host, 'AL32UTF8');
 
-    if (!$conn) {
-        $e = oci_error();
-        echo "⭕ Connection failed: " . $e['message']. " <br>";
-    } else {
-        echo "✅ Connected to Oracle successfully! <br>";
-    }
+    if (!$conn):
+        $err = oci_error();
+        echo "⭕ Connection failed: " . $err['message']. " <br>";
+    endif;
 ?>

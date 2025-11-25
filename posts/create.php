@@ -2,15 +2,16 @@
 <?php 
     // Database connection
     require '../config/db.php';
-    if(session_status() === PHP_SESSION_NONE) {
+    if(session_status() === PHP_SESSION_NONE):
         session_start();
-    }
-    // session_start();
+    endif;
 
     // TODO: Authorization
+    if( !defined('USER_ROLE_ID') ):
+        require('./../app/auth.php');
+        authorize([1, 3]);
+    endif;
 
-
-    echo $_SESSION['username'] . "<br>";
     $author = $_SESSION['username'];
 
     // Handle form submission
@@ -60,12 +61,10 @@
                 // execute statement
                 $result = oci_execute($statement, OCI_COMMIT_ON_SUCCESS);
 
-                if($result) {
-                    echo "✅Post created successfully. <br>";
-                } else {
+                if(!$result):
                     $err = oci_error($statement);
                     echo "⭕ Error creating post: " . $err['message'] . "<br>";
-                }    
+                endif;   
             
     endif;    
 
@@ -88,7 +87,7 @@
             <option value="62">Travel & Nature</option>
         </select>
         <input type="file" name="image" id="" placeholder="Enter image...">
-        <input class="btn btn-submit" type="submit" value="create post">
+        <input class="button button-create" type="submit" value="create post">
     </form>
     
 </div>

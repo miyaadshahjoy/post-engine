@@ -10,13 +10,12 @@
 
     $post_count = 0;
 
-    if($result){
-        echo "✅ Query execution successful! <br>"; 
-        $post_count = oci_fetch_all($statement, $posts, 0, -1, OCI_FETCHSTATEMENT_BY_ROW);
-    } else {
+    if(!$result):
       $err = oci_error($statement); 
       echo "⭕ Query execution failed: " .$err['message']; 
-    } 
+    endif;
+
+    $post_count = oci_fetch_all($statement, $posts, 0, -1, OCI_FETCHSTATEMENT_BY_ROW);
 ?>
 
 <!-- posts list -->
@@ -33,7 +32,7 @@
     <?php foreach($posts as $post):
             $post_id = $post['ID'];
             $post_title = $post['TITLE'];
-            $post_created_at = $post['CREATED_AT'];
+            $post_created_at = DateTime::createFromFormat('d-M-y h.i.s.u a', $post['CREATED_AT'])->format('M d, Y h:i A');
             $post_status = $post['STATUS'];
             $post_featured = (int) $post['FEATURED'];
         ?>

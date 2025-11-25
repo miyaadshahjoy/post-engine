@@ -46,7 +46,6 @@
     $total_pages = ceil($total_posts / $limit);
 
     # Fetch paginated posts
-
     $sql = "SELECT * FROM (
                 SELECT p.id, p.title, p.image, c.name AS categories, p.author, p.created_at, 
                 ROW_NUMBER() OVER (ORDER BY p.created_at DESC) AS rn
@@ -58,18 +57,22 @@
 
     # Statement 
     $statement = oci_parse($conn, $sql);
+
     $start = $offset + 1;
     $end = $offset + $limit;
     
+    # Bind
     oci_bind_by_name($statement, ':row_start', $start);
     oci_bind_by_name($statement, ':row_end', $end);
 
     # Execute
     $result = oci_execute($statement, OCI_COMMIT_ON_SUCCESS);
+
     if(!$result):
         $err = oci_error($statement);
         echo "⭕ Query execution failed: " . $err['message'];
     endif;
+
     oci_fetch_all($statement, $posts, 0, -1, OCI_FETCHSTATEMENT_BY_ROW);
 
 
@@ -86,17 +89,17 @@
     <body>
         <!-- Header -->
         <?php 
-            require('./header.php');
+            require_once('./components/layout/header.php');
         ?>
         
         <!-- Hero -->
         <section class="hero">
             <div class="container">
                 <div class="hero-wrapper">
-                    <div class="hero-content">
-                        <div class="hero-category">Marketing</div>
+                    <a href="http://localhost/post-engine/pages/post.php?id=1" class="hero-content">
+                        <div class="hero-category">Travel and Adventure</div>
                         <h1 class="hero-heading">The Majesty of the Himalayas: Where Earth Touches the Sky</h1>
-                    </div>
+                    </a>
 
                     <!-- Featured posts  -->
                     <div class="featured">
@@ -114,8 +117,8 @@
                                 <div class="post-content">
                                     <img src="images/<?= $post_image ?>" alt=<?= $post_title?> class="featured-image">
                                     <div class="featured-text">
-                                        <a class="featured-title" href="http://localhost/post-engine/post.php?id=<?= $post_id ?>"><?= $post_title ?></a>
-                                        <div class="featured-category"><?= $post_category ?></div>
+                                        <a class="featured-title" href="http://localhost/post-engine/pages/post.php?id=<?= $post_id ?>"><?= $post_title ?></a>
+                                        <div class="featured-categories"><?= $post_category ?></div>
                                     </div>
                                 </div>
                             </div>
@@ -159,7 +162,7 @@
                                 <div class="post-card-date">
                                     <?= $post_date ?>
                                 </div>
-                                <a class="post-card-title" href="http://localhost/post-engine/post.php?id=<?= $post_id ?>">
+                                <a class="post-card-title" href="http://localhost/post-engine/pages/post.php?id=<?= $post_id ?>">
                                     <?= $post_title ?>
                                 </a>
                                 <div class="post-card-author">
@@ -194,7 +197,7 @@
 
         <!-- Footer -->
         <?php 
-            require('./footer.php');
+            require('./components/layout/footer.php');
         ?>
         
 

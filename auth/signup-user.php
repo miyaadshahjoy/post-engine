@@ -1,33 +1,42 @@
 <?php 
 
+    # Database Connection
     require_once '../config/db.php';
 
-    if(isset($_POST['fullname']) &&
-    isset($_POST['username']) && 
-    isset($_POST['email']) && 
-    isset($_POST['password']) && 
-    isset($_POST['password_confirm'])) {
+    if($_SERVER['REQUEST_METHOD'] === 'POST'):
 
+        # Form validation
         $fullname = $_POST['fullname'];
         $username = $_POST['username'];
         $email = $_POST['email'];
         $password = $_POST['password'];
         $password_confirm = $_POST['password_confirm'];
-        $role_id = 4;
-        $status = 'active';
 
-        if($password !== $password_confirm) {
-            echo "⭕ Passwords do not match! <br>";
-            return;
-        }
+        if(empty($fullname) || empty($username) || empty($email) || empty($password) || empty($password_confirm)):
+            die( "⭕ All fields are required!");
+        endif;
 
+        if(!filter_var($email, FILTER_VALIDATE_EMAIL)):
+            die("⭕ Invalid email format!");
+        endif;
+
+        $role_id = 4; # viewer 
+        $status = 'active'; 
+
+        if($password !== $password_confirm):
+             die("⭕ Passwords do not match!");
+        endif;
+
+        # Hash password
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
+        # Query : Create user
         $sql = "INSERT INTO users (fullname, username, email, password, role_id, status) VALUES (:fullname, :username, :email, :password, :role_id, :status)";
 
-        // statement
+        # Statement
         $signupQuery = oci_parse($conn, $sql);
 
+        # Bind parameters
         oci_bind_by_name($signupQuery, ':fullname', $fullname);
         oci_bind_by_name($signupQuery, ':username', $username);
         oci_bind_by_name($signupQuery, ':email', $email);
@@ -35,17 +44,16 @@
         oci_bind_by_name($signupQuery, ':role_id', $role_id);
         oci_bind_by_name($signupQuery, ':status', $status);
 
+        # Execute query
         $result =oci_execute($signupQuery);
 
-        if($result){
-            echo "✅ User created successfully! <br>";
-           
-        } else {
+        if(!$result):
             $err = oci_error($signupQuery);
             echo "⭕ Error creating user: " . $err['message'] . "<br>";
-        }
+        endif;
 
-    }
+    endif;
+
 ?>
 
 

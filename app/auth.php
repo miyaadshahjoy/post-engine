@@ -15,7 +15,6 @@
 
     function authorize(array $allowed_roles){
         global $user_role;
-        echo "user role id: " . $user_role . "<br>";
         if(!in_array($user_role, $allowed_roles)){
             http_response_code(403);
             echo "Unauthorized access. You do not have permission to access this page. <br>";

@@ -47,11 +47,17 @@ h2 {
 }
 
 p {
-  line-height: 1.6;
+  line-height: 1.9;
 }
 
 img {
   width: 100%;
+}
+
+a,
+a:visited {
+  color: var(--text-color);
+  text-decoration: none;
 }
 
 /* BUTTON STYLES  */
@@ -238,9 +244,20 @@ input[type="file"] {
 .sidebar-links {
   display: flex;
   flex-direction: column;
+  gap: 8px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-left: 12px;
+  padding-right: 12px;
 }
 .sidebar-links a {
   padding: 8px 16px;
+  transition: all 0.2s ease-in-out;
+}
+.sidebar-links a:hover,
+.sidebar-links a.active {
+  color: #fff;
+  background-color: var(--primary-color);
 }
 
 /* DASHBOARD OVERVIEW STYLES */
@@ -397,7 +414,7 @@ td a {
 .featured-text {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
 }
 
 .featured-title {
@@ -406,6 +423,9 @@ td a {
   font-weight: 600;
 }
 
+.featured-categories {
+  font-size: 12px;
+}
 /* POSTS */
 
 .posts-wrapper,
@@ -476,14 +496,33 @@ td a {
 .post {
   margin-bottom: 96px;
 }
+.post-categories {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
 .post-image {
   margin-bottom: 24px;
 }
 .post-date {
+  font-size: 12px;
   margin-bottom: 12px;
 }
 .post-author {
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   margin-bottom: 64px;
+}
+
+.post-author img {
+  width: 24px;
+  height: 24px;
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 .post-description {

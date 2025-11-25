@@ -38,15 +38,11 @@ CREATE TABLE posts (
     FOREIGN KEY (categories_id) REFERENCES categories (id)
 )
 
-INSERT INTO categories (name) VALUES ('Travel and Nature');
 
-
-
-
-
+SELECT * FROM user_roles;
 
 SELECT * FROM users;
-SELECT * FROM user_roles;
+
 SELECT * FROM posts;
 
 SELECT * FROM categories;
@@ -109,13 +105,7 @@ SELECT * FROM (
     )
 WHERE row_number <= 6;
 
-
-
 COMMIT;
 
 
-
-
-
-SELECT * FROM posts WHERE author = 'author1';
 

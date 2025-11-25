@@ -1,18 +1,19 @@
 <?php
   require '../config/db.php';
-  require('./../middlewares/auth.php');
+  require('./../app/auth.php');
 
   if(session_status() === PHP_SESSION_NONE) {
     session_start();
   }
 
-  // Authorization
-  // const USER_ROLE_ID = 4;
+  # Authorization
+  # const USER_ROLE_ID = 4;
   authorize([1, 3, 4]);
 
-  // if (!isset($_GET['id']) || !is_numeric($_GET['id'])):
-  //   die("⭕ Invalid user id");
-  // endif;
+  /* if (!isset($_GET['id']) || !is_numeric($_GET['id'])):
+    die("⭕ Invalid user id");
+  endif;
+  */
 
   $user_id = $_GET['id'] ?? $_SESSION['id'];
 

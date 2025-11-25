@@ -37,7 +37,7 @@
             $user_fullname = $user['FULLNAME'];
             $user_role = $user['ROLE'];
             $user_status = $user['STATUS'];
-            $user_created_at = $user['CREATED_AT'];
+            $user_created_at = DateTime::createFromFormat('d-M-y h.i.s.u a', $user['CREATED_AT'])->format('M d, Y h:i A');
             
         ?>
 

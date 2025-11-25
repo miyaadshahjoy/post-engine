@@ -1,15 +1,13 @@
-<!-- users/profile.php -->
-
 <?php
   require '../config/db.php';
-  require('./../middlewares/auth.php');
+  require('./../app/auth.php');
   
-  if(session_status() === PHP_SESSION_NONE) {
+  if(session_status() === PHP_SESSION_NONE) :
     session_start();
-  }
+  endif;
   
-  // Authorization
-  // const USER_ROLE_ID = 1;
+  # Authorization
+  # const USER_ROLE_ID = 1;
   authorize([1, 3, 4]);
 
   if (!isset($_GET['id']) || !is_numeric($_GET['id'])):
@@ -90,7 +88,6 @@
       echo "⭕ Error updating user: " . $err['message'] . "<br>";
     endif;
 
-    print("✅ User updated successfully. <br>");
   endif;
 
 ?>
@@ -105,7 +102,7 @@
   </head>
   <body>
     <!-- Header here  -->
-    <?php require('./../header.php'); ?>
+    <?php require('./../components/layout/header.php'); ?>
 
     <section class="profile">
       <div class="container">

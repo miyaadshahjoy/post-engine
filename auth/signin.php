@@ -1,70 +1,60 @@
 <?php 
 
-    require '../config/db.php';
+    # Database Connection
+    require_once '../config/db.php';
 
-    if(isset($_POST['email']) && 
-    isset($_POST['password'])) {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST'):
 
         $email = $_POST['email'];
         $password = $_POST['password'];
 
+        if (empty($email) || empty($password)):
+            die("⭕ Email and Password are required");
+        endif;
+
+        # Query : Get user
         $sql = "SELECT * FROM users WHERE email = :email";
 
-        // statement
+        # Statement
         $signinQuery = oci_parse($conn, $sql);
-
+        
+        # Bind Parameters
         oci_bind_by_name($signinQuery, ':email', $email);
-
+        
+        # Execute
         $result = oci_execute($signinQuery);
-        if(!$result){
+
+        if(!$result):
             $err = oci_error($signinQuery);
             echo "⭕ Query execution failed: " . $err['message'];
-        }
-
-        $user = oci_fetch_assoc($signinQuery);
+        endif;
         
-        if($user && password_verify($password, $user['PASSWORD'])) {
-            
-            // echo $user['EMAIL'] . "<br>";
-            echo "✅ Login successful! <br>";
+        $user = oci_fetch_assoc($signinQuery);
 
-            session_start();
+        if (!$user):
+            die("⭕ User not found!");
+        endif;
 
-            $_SESSION['id'] = $user['ID'];
-            $_SESSION['fullname'] = $user['FULLNAME'];
-            $_SESSION['username'] = $user['USERNAME'];
-            $_SESSION['email'] = $user['EMAIL'];
-            $_SESSION['role_id'] = $user['ROLE_ID'];
+        if ($user['STATUS'] === 'pending'):
+            die("⭕ Your account is not active yet! Please wait for admin approval.");
+        endif;
 
-            /*
-            switch ($user['ROLE_ID']) {
-                case 1:
-                    # code...
-                    header('Location: ../dashboard/admin-dashboard.php');
-                    break;
-                case 2:
-                    # code...
-                    header('Location: ../dashboard/moderator-dashboard.php');
-                    break;
-                case 3:
-                    # code...
-                    header('Location: ../dashboard/author-dashboard.php');
-                    break;
-                case 4:
-                    # code...
-                    header('Location: ../index.php');
-                    break;
-                
-                default:
-                    # code...
-                    header('Location: ../index.php');
-                    break;
-            }   
-            */        
-        } else {
-            echo "⭕ Login failed! <br>";
-        }
-    }
+        if ($user['STATUS'] === 'removed'):
+            die("⭕ Your account is blocked! Please contact admin.");
+        endif;
+        
+        if(!$user || ! password_verify($password, $user['PASSWORD'])):
+            die("⭕ Login failed!");
+        endif;
+                    
+        session_start();
+        
+        $_SESSION['id'] = $user['ID'];
+        $_SESSION['fullname'] = $user['FULLNAME'];
+        $_SESSION['username'] = $user['USERNAME'];
+        $_SESSION['email'] = $user['EMAIL'];
+        $_SESSION['role_id'] = $user['ROLE_ID'];
+    endif;
 ?>
 
 
@@ -78,7 +68,7 @@
     </head>
     <body>
         <?php 
-            require('./../header.php');
+            require('./../components/layout/header.php');
         ?>
         <section class="section">
 

@@ -1,19 +1,26 @@
 <!-- posts/update.php -->
 <?php 
 
+    # Database Connection
     require '../config/db.php';
-    if(session_status() === PHP_SESSION_NONE) {
+    
+    if(session_status() === PHP_SESSION_NONE):
         session_start();
-    }
+    endif;
     
     // TODO: Authorization
+    # const USER_ROLE_ID = 1;
+    if( !defined('USER_ROLE_ID') ):
+        require('./../app/auth.php');
+        authorize([1, 3]);
+    endif;
+        
 
     if(!isset($_GET['id']) || !is_numeric($_GET['id'])):
         die("⭕ Invalid post id");
     endif;
 
     $post_id = (int) $_GET['id'];
-    echo "post id: " . $post_id . "<br>";
 
     // Fetch existing post 
     $sql = "SELECT posts.TITLE, posts.AUTHOR, posts.IMAGE, posts.DESCRIPTION, posts.STATUS, posts.CREATED_AT, categories.NAME AS CATEGORIES FROM posts JOIN categories ON posts.CATEGORIES_ID = categories.ID where posts.ID = :id";
@@ -96,13 +103,10 @@
 
         $result = oci_execute($statement, OCI_COMMIT_ON_SUCCESS);
 
-            if($result) {
-                echo "✅Post updated successfully. <br>";
-            } else {
+            if(!$result):
                 $err = oci_error($statement);
                 echo "⭕ Error updating post: " . $err['message'] . "<br>";
-            }
-        
+            endif;
     endif;
 
 ?>
@@ -120,7 +124,7 @@
             <option value="1">Travel & Adventure</option>
         </select>
         <input type="file" name="image" id="" placeholder="Enter image...">        
-        <input class="btn btn-submit" type="submit" value="Update Post">
+        <input class="button button-update" type="submit" value="Update Post">
     </form>
 
 </div>

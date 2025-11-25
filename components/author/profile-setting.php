@@ -82,8 +82,6 @@
       $err = oci_error($statement);
       echo "⭕ Error updating user: " . $err['message'] . "<br>";
     endif;
-
-    print("✅ User updated successfully. <br>");
   endif;
 
 ?>

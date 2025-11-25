@@ -1,9 +1,10 @@
-<!-- dashboard/admin.php  -->
 <?php 
     require('../config/db.php');
-    require('./../middlewares/auth.php');
+    require('./../app/auth.php');
     const USER_ROLE_ID = 1;
     authorize([USER_ROLE_ID]);
+
+    $currentPage = $_GET['page'] ?? 'dashboard';
 ?>
 
 
@@ -17,7 +18,7 @@
     </head>
     <body>
     <?php 
-        require('./../header.php');
+        require('./../components/layout/header.php');
     ?>
 
         <section class="dashboard">
@@ -26,14 +27,23 @@
 
                     <aside class="dashboard-sidebar">
                         <div class="sidebar-links">
-                            <a href="admin.php?page=dashboard">Dashboard</a>
-                            <a href="admin.php?page=users">Users</a>
-                            <a href="admin.php?page=posts">Posts</a>
-                            <a href="admin.php?page=comments">Comments</a>
-                            <a href="admin.php?page=settings">Account Settings</a>
+                            <a class="<?= $currentPage === 'dashboard' ? 'active' : '' ?>" 
+                            href="admin.php?page=dashboard">Dashboard</a>
+
+                            <a class="<?= $currentPage === 'users' ? 'active' : '' ?>" 
+                            href="admin.php?page=users">Users</a>
+
+                            <a class="<?= $currentPage === 'posts' ? 'active' : '' ?>" 
+                            href="admin.php?page=posts">Posts</a>
+
+                            <a class="<?= $currentPage === 'comments' ? 'active' : '' ?>" 
+                            href="admin.php?page=comments">Comments</a>
+
+                            <a class="<?= $currentPage === 'settings' ? 'active' : '' ?>" 
+                            href="admin.php?page=settings">Account Settings</a>
                         </div>
-                        
-                    </aside>                         
+                    </aside>
+                         
                     <main class="main author-main">
                         <!-- components here  -->
                         <?php 
@@ -60,14 +70,12 @@
                                     require('../components/admin/profile-setting.php');
                                     break;
                                 default:
-                                    # code...
                                     break;
                             endswitch;
                             
                                     
                         ?>
                         
-                        <?php require('./../footer.php'); ?>
                     </main>
                 </div>
             </div>
