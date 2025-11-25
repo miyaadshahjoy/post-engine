@@ -47,6 +47,8 @@ dashboards, and CRUD operations for posts and users.
 - `.env` support
 
 ## 📷 Screenshots
+![PREVIEW](/images/screenshots/ss-1.png)
+
 
 ## 📂 Folder Structure
 
