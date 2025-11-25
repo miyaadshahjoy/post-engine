@@ -67,10 +67,11 @@
                                     
                         ?>
                         
+                        <?php require('./../footer.php'); ?>
                     </main>
                 </div>
             </div>
         </section>
-        
+    
     </body>
 </html>

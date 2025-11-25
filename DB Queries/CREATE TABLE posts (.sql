@@ -88,6 +88,26 @@ FROM posts
 WHERE author = 'zaydhasnain';
 
 
+SELECT * FROM (
+    SELECT p.id, p.title, p.image, c.name AS categories, p.author, p.created_at, 
+    ROW_NUMBER() OVER (ORDER BY p.created_at DESC) AS row_number 
+    FROM posts p JOIN categories c 
+    ON p.categories_id = c.id 
+    WHERE p.categories_id = 1
+
+    )
+WHERE row_number <= 6;
+
+
+SELECT * FROM (
+    SELECT p.id, p.title, p.image, c.name AS categories, p.author, p.created_at, 
+    ROW_NUMBER() OVER (ORDER BY p.created_at DESC) AS row_number 
+    FROM posts p JOIN categories c 
+    ON p.categories_id = c.id 
+    WHERE p.categories_id = 1
+
+    )
+WHERE row_number <= 6;
 
 
 

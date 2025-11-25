@@ -377,6 +377,9 @@ td a {
 }
 
 .posts-wrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 48px;
   margin-bottom: 64px;
 }
 .post-content {
@@ -405,20 +408,33 @@ td a {
 
 /* POSTS */
 
-.posts-wrapper {
+.posts-wrapper,
+.related-wrapper {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 48px;
 }
 
-.posts-heading {
+.posts-heading,
+.related-heading {
   margin-bottom: 24px;
 }
 
 .post-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 16px;
+}
+
+.post-card-categories {
+  position: absolute;
+  top: 9px;
+  left: 9px;
+  font-size: 12px;
+  background-color: var(--accent-color);
+  padding: 4px 8px;
+  border-radius: 8px;
 }
 
 .post-card-image {
@@ -445,9 +461,21 @@ td a {
 
 .post-card-author {
   font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.post-card-author img {
+  width: 24px;
+  height: 24px;
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 /* Post page */
+.post {
+  margin-bottom: 96px;
+}
 .post-image {
   margin-bottom: 24px;
 }
@@ -461,6 +489,11 @@ td a {
 .post-description {
   max-width: 860px;
   margin: 0 auto;
+}
+
+/* RELATED POSTS */
+.related {
+  margin-bottom: 96px;
 }
 
 /* PAGINATION STYLES */
@@ -500,4 +533,15 @@ td a {
 
 .button-pagination.active:hover {
   transform: none;
+}
+
+/* FOOTER */
+.footer {
+  padding-top: 24px;
+  padding-bottom: 12px;
+  color: var(--text-color);
+}
+.footer-bottom {
+  font-size: 0.875rem;
+  text-align: center;
 }

@@ -1,4 +1,3 @@
-<!-- index.php  -->
 <?php 
 
     # Database Connection
@@ -115,7 +114,7 @@
                                 <div class="post-content">
                                     <img src="images/<?= $post_image ?>" alt=<?= $post_title?> class="featured-image">
                                     <div class="featured-text">
-                                        <a class="featured-title" href="http://localhost/post-engine/posts/view.php?id=<?= $post_id ?>"><?= $post_title ?></a>
+                                        <a class="featured-title" href="http://localhost/post-engine/post.php?id=<?= $post_id ?>"><?= $post_title ?></a>
                                         <div class="featured-category"><?= $post_category ?></div>
                                     </div>
                                 </div>
@@ -139,19 +138,35 @@
                             $post_image = $post['IMAGE'];
                             $post_category = $post['CATEGORIES'];
                             $post_author = $post['AUTHOR'];
-                            $post_date = $post['CREATED_AT'];
+                            $post_date = DateTime::createFromFormat('d-M-y h.i.s.u A', $post['CREATED_AT'])->format('M d, Y');
+
+                            $sql = "SELECT fullname, image FROM users WHERE username = :username";
+                            $statement = oci_parse($conn, $sql);
+                            oci_bind_by_name($statement, ':username', $post_author);
+                            $result = oci_execute($statement, OCI_COMMIT_ON_SUCCESS);
+                            if(!$result):
+                                $err = oci_error($statement);
+                                echo "⭕ Query execution failed: " . $err['message'];
+                            endif;
+                            $author = oci_fetch_assoc($statement);
+                            $post_author_fullname = $author['FULLNAME'];
+                            $post_author_image = $author['IMAGE'];
                     ?>
                         <div class="post-card">
+                            <div class="post-card-categories"><?= $post_category ?></div>
                             <img src="images/<?= $post_image ?>" alt=<?= $post_title ?> class="post-card-image">
                             <div class="post-card-content">
                                 <div class="post-card-date">
                                     <?= $post_date ?>
                                 </div>
-                                <a class="post-card-title" href="http://localhost/post-engine/posts/view.php?id=<?= $post_id ?>">
+                                <a class="post-card-title" href="http://localhost/post-engine/post.php?id=<?= $post_id ?>">
                                     <?= $post_title ?>
                                 </a>
                                 <div class="post-card-author">
-                                    <?= $post_author ?>
+                                    <?php if ($post_author_image !== null): ?>
+                                        <img src="images/users/<?= $post_author_image ?>" alt="">
+                                    <?php endif; ?>
+                                    <?= $post_author_fullname ?>
                                 </div>
                             </div>
                         </div>

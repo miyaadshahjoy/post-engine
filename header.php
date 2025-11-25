@@ -73,10 +73,25 @@
                 
                 
                     
+                
+
                 <!-- visible only when logged in  -->
                 <?php if(isset($_SESSION['id'])): ?>
                     <a href="http://localhost/post-engine/auth/logout.php">Logout</a>
 
+                    <?php if($role_id !== 4): ?>
+                        <a href='#' class="user-link">
+                            <img src="http://localhost/post-engine/images/users/<?= $user_image?>" alt="user image" class="user-image">
+                            <span><?= $firstname ?></span>
+                        </a>
+                    <?php endif; ?>
+
+
+                    
+                <?php endif; ?>
+
+                <!-- visible only when logged in and a viewer -->
+                 <?php if(isset($_SESSION['id']) && $role_id === 4): ?>
                     <a href='http://localhost/post-engine/users/profile.php?id=<?= $_SESSION['id']; ?>' class="user-link">
                         <img src="http://localhost/post-engine/images/users/<?= $user_image?>" alt="user image" class="user-image">
                         <span><?= $firstname ?></span>

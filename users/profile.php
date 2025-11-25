@@ -9,8 +9,8 @@
   }
   
   // Authorization
-  const USER_ROLE_ID = 1;
-  authorize([USER_ROLE_ID]);
+  // const USER_ROLE_ID = 1;
+  authorize([1, 3, 4]);
 
   if (!isset($_GET['id']) || !is_numeric($_GET['id'])):
     die("⭕ Invalid user id");
