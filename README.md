@@ -4,35 +4,18 @@ A role-based blogging platform built with **PHP** + **Oracle DB**,
 developed to sharpen backend fundamentals, authentication,
 authorization, and full-stack structure.
 
-```{=html}
-<p align="center">
-```
-
-`<img src="https://img.shields.io/badge/PHP-8%2B-777BB4?style=flat&logo=php&logoColor=white" />`{=html}
-`<img src="https://img.shields.io/badge/Oracle-Database-red?style=flat&logo=oracle" />`{=html}
-`<img src="https://img.shields.io/badge/Status-In%20Development-yellow?style=flat" />`{=html}
-`<img src="https://img.shields.io/badge/License-MIT-green?style=flat" />`{=html}
-
-```{=html}
-</p>
-```
-
 ## 🎯 What is PostEngine?
 
 A multi-role blogging system with secure login, admin workflows,
-dashboards, and CRUD operations --- structured cleanly so you can
-proudly say:
-
-> "Yeah, I built that... and yes, the code is not living in one giant
-> spaghetti index.php."
+dashboards, and CRUD operations for posts and users.
 
 ## 🚀 Features
 
 ### 🔐 Authentication & Authorization
 
-- Login, signup (admin/user), logout\
-- Session-based auth\
-- Route protection via `auth.php`\
+- Login, signup (admin/user), logout
+- Session-based auth
+- Route protection via `auth.php`
 - Role-specific dashboards
 
 ### 🧩 RBAC (Role-Based Access Control)
@@ -44,28 +27,30 @@ proudly say:
 
 ### 📝 Post Management
 
-- Create posts\
-- Edit/update posts\
-- Delete posts\
-- View full post\
+- Create posts
+- Edit/update posts
+- Delete posts
+- View full post
 - Admin publish/unpublish toggle
 
 ### 👤 User Management
 
-- Profile update\
-- Password update\
+- Profile update
+- Password update
 - User listing + approval panel
 
 ### 🏗️ Clean Architecture
 
-- Reusable components\
-- Oracle database connection via `db.php`\
-- Pages separated from logic\
+- Reusable components
+- Oracle database connection via `db.php`
+- Pages separated from logic
 - `.env` support
+
+## 📷 Screenshots
 
 ## 📂 Folder Structure
 
-    PostEngine/
+    post-engine/
     |---- app/
     │     └── auth.php
     │
@@ -138,8 +123,8 @@ proudly say:
 ### 1️⃣ Clone the repo
 
 ```bash
-git clone https://github.com/miyaadshah/post-engine.git
-cd PostEngine
+git clone https://github.com/miyaadshahjoy/post-engine.git
+cd post-engine
 ```
 
 ### 2️⃣ Environment setup
