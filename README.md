@@ -57,11 +57,11 @@ dashboards, and CRUD operations for posts and users.
 ![PREVIEW](/images/screenshots/ss-7.png)
 ![PREVIEW](/images/screenshots/ss-8.png)
 ![PREVIEW](/images/screenshots/ss-9.png)
+![PREVIEW](/images/screenshots/ss-14.png)
 ![PREVIEW](/images/screenshots/ss-10.png)
 ![PREVIEW](/images/screenshots/ss-11.png)
 ![PREVIEW](/images/screenshots/ss-12.png)
 ![PREVIEW](/images/screenshots/ss-13.png)
-![PREVIEW](/images/screenshots/ss-14.png)
 
 ## 📂 Folder Structure
 
