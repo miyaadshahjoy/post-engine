@@ -1,7 +1,7 @@
 <?php 
 
     require('../../config/db.php');
-    require('./../../middlewares/auth.php');
+    require('./../../app/auth.php');
     const AUTHOR_ROLE_ID = 1;
     authorize([AUTHOR_ROLE_ID]);
 

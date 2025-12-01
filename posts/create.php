@@ -1,4 +1,3 @@
-<!-- posts/create.php -->
 <?php 
     // Database connection
     require '../config/db.php';
@@ -85,6 +84,7 @@
             <option value="1">Travel & Adventure</option>
             <option value="21">Culture & Sprituality</option>
             <option value="62">Travel & Nature</option>
+            <option value="82">Culture & Heritage</option>
         </select>
         <input type="file" name="image" id="" placeholder="Enter image...">
         <input class="button button-create" type="submit" value="create post">

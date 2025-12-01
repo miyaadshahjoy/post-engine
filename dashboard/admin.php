@@ -65,6 +65,10 @@
                                 case 'posts':
                                     require('../components/admin/postslist.php');
                                     break;
+
+                                case 'comments':
+                                    require('../components/admin/comments-list.php');
+                                    break;
                                     
                                 case 'update':
                                     require('../posts/update.php');

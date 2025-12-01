@@ -1,3 +1,4 @@
+<!-- components/admin/postslist.php -->
 <?php 
 
     $sql = "SELECT * FROM posts";

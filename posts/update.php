@@ -1,4 +1,3 @@
-<!-- posts/update.php -->
 <?php 
 
     # Database Connection
@@ -116,12 +115,15 @@
         Edit post
     </h2>
     
-    <form class="form form-update"  action="http://localhost/post-engine/dashboard/admin.php?page=update&id=<?= $post_id; ?>" method="post" enctype="multipart/form-data">
+    <form class="form form-update"  action="http://localhost/post-engine/dashboard/author.php?page=update&id=<?= $post_id; ?>" method="post" enctype="multipart/form-data">
         <input type="text" name="title" id="" value="<?= $post_title; ?>" placeholder="Enter title...">
         <textarea name="description" id="" placeholder="Enter description..."><?= $post_description; ?></textarea>
         <label for="categories" style="margin-bottom: -18px; ">Categories</label>
         <select name="categories" id="">
             <option value="1">Travel & Adventure</option>
+            <option value="21">Culture & Sprituality</option>
+            <option value="62">Travel & Nature</option>
+            <option value="82">Culture & Heritage</option>
         </select>
         <input type="file" name="image" id="" placeholder="Enter image...">        
         <input class="button button-update" type="submit" value="Update Post">

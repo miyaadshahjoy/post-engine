@@ -6,7 +6,7 @@
         session_start();
     }
     // Authorization
-    require('./../../middlewares/auth.php');
+    require('./../../app/auth.php');
     const USER_ROLE_ID = 1;
     authorize([USER_ROLE_ID]);
 
