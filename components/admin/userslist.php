@@ -42,7 +42,7 @@
         ?>
 
             <tr>
-                <td> <?= $user_fullname ?> </td>
+                <td> <a href="http://localhost/post-engine/dashboard/admin.php?page=users&user=<?= $user_id ?>"> <?= $user_fullname ?> </a> </td>
                 <td>
                     <?= $user_role ?>
                 </td>

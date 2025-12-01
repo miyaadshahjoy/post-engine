@@ -5,6 +5,7 @@
     authorize([USER_ROLE_ID]);
 
     $currentPage = $_GET['page'] ?? 'dashboard';
+    $currentUser = $_GET['user'] ?? null;
 ?>
 
 
@@ -54,7 +55,11 @@
                                     require('../components/admin/dashboard-overview.php');
                                     break;
                                 case 'users':
-                                    require('../components/admin/userslist.php');
+                                    if ($currentUser):
+                                        require('../components/admin/user-profile.php');
+                                    else:
+                                        require('../components/admin/userslist.php');
+                                    endif;
                                     break;
 
                                 case 'posts':
