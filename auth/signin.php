@@ -3,13 +3,17 @@
     # Database Connection
     require_once '../config/db.php';
 
+    require_once '../app/errors.php';
+
     if ($_SERVER['REQUEST_METHOD'] === 'POST'):
 
         $email = $_POST['email'];
         $password = $_POST['password'];
 
         if (empty($email) || empty($password)):
-            die("⭕ Email and Password are required");
+            flash_error("⭕ Email and Password are required");
+            header("Location: signin.php");
+            exit();
         endif;
 
         # Query : Get user
@@ -26,34 +30,50 @@
 
         if(!$result):
             $err = oci_error($signinQuery);
-            echo "⭕ Query execution failed: " . $err['message'];
+            flash_error("⭕ Query execution failed: " . $err['message']);
+            header("Location: signin.php");
+            exit();
         endif;
         
         $user = oci_fetch_assoc($signinQuery);
 
         if (!$user):
-            die("⭕ User not found!");
+            flash_error("⭕ User not found!");
+            header("Location: signin.php");
+            exit();
         endif;
 
         if ($user['STATUS'] === 'pending'):
-            die("⭕ Your account is not active yet! Please wait for admin approval.");
+            flash_error("⭕ Your account is not active yet! Please wait for admin approval.");
+            header("Location: signin.php");
+            exit();
         endif;
 
         if ($user['STATUS'] === 'removed'):
-            die("⭕ Your account is blocked! Please contact admin.");
+            flash_error("⭕ Your account is blocked! Please contact admin.");
+            header("Location: signin.php");
+            exit();
         endif;
         
         if(!$user || ! password_verify($password, $user['PASSWORD'])):
-            die("⭕ Login failed!");
+            flash_error("⭕ Invalid email or password.");
+            header("Location: signin.php");
+            exit();
         endif;
-                    
-        session_start();
+
+        if (session_status() === PHP_SESSION_NONE):            
+            session_start();
+        endif;
         
         $_SESSION['id'] = $user['ID'];
         $_SESSION['fullname'] = $user['FULLNAME'];
         $_SESSION['username'] = $user['USERNAME'];
         $_SESSION['email'] = $user['EMAIL'];
         $_SESSION['role_id'] = $user['ROLE_ID'];
+
+        flash_success("✅ Signed in successfully!");
+        header("Location: ../index.php");
+        exit();
     endif;
 ?>
 
@@ -91,3 +111,4 @@
         
     </body>
 </html>
+

@@ -1,11 +1,14 @@
 <?php 
   # Database Connection
   require('./../config/db.php');
+  require '../app/errors.php';
 
 
   if ($_SERVER['REQUEST_METHOD'] === 'GET'):
     if (!isset($_GET['id']) || empty($_GET['id'])):
-      die("⭕ Post ID is required.");
+      flash_error("⭕ Post ID is required.");
+      header("Location: http://localhost/post-engine/index.php");
+      exit();
     endif;
     $post_id = $_GET['id'] ;
   endif;
@@ -80,6 +83,47 @@ d, Y');
 
   oci_fetch_all($statement, $related_posts, 0, -1, OCI_FETCHSTATEMENT_BY_ROW);
 
+
+  /////////////////////////////////////////
+  function timePassed($oracleTime){
+    // Create with timezone of your Oracle data
+    $tz = new DateTimeZone("Asia/Dhaka");
+
+    $dt = DateTime::createFromFormat(
+        'd-M-y h.i.s.u A',
+        $oracleTime,
+        $tz
+    );
+
+    if (!$dt) {
+        return "Invalid date";
+    }
+
+    // Convert to server timezone if needed
+    $dt->setTimezone(new DateTimeZone(date_default_timezone_get()));
+
+    $time = $dt->getTimestamp();
+    $now  = time();
+    $diff = $now - $time;
+
+    if ($diff < 0) $diff = 0;
+
+    if ($diff < 60) {
+        return "just now";
+    } elseif ($diff < 3600) {
+        $m = floor($diff / 60);
+        return "$m minute" . ($m > 1 ? "s" : "") . " ago";
+    } elseif ($diff < 86400) {
+        $h = floor($diff / 3600);
+        return "$h hour" . ($h > 1 ? "s" : "") . " ago";
+    } elseif ($diff < 604800) {
+        $d = floor($diff / 86400);
+        return "$d day" . ($d > 1 ? "s" : "") . " ago";
+    } else {
+        return $dt->format("M d, Y");
+    }
+  }
+
  ?>
 
 <!DOCTYPE html>
@@ -148,7 +192,7 @@ d, Y');
       <div class="container">
 
         <?php
-          # QUERY 
+          # QUERY: Fetch comments
           $sql = "SELECT u.fullname, u.image, c.comment_text, c.created_at 
                   FROM comments c JOIN users u
                   ON c.user_id = u.id
@@ -182,44 +226,7 @@ d, Y');
             $comment_text = $comment['COMMENT_TEXT'];
             $comment_date = $comment['CREATED_AT'];  
             
-            function timePassed($oracleTime){
-              // Create with timezone of your Oracle data
-              $tz = new DateTimeZone("Asia/Dhaka");
-
-              $dt = DateTime::createFromFormat(
-                  'd-M-y h.i.s.u A',
-                  $oracleTime,
-                  $tz
-              );
-
-              if (!$dt) {
-                  return "Invalid date";
-              }
-
-              // Convert to server timezone if needed
-              $dt->setTimezone(new DateTimeZone(date_default_timezone_get()));
-
-              $time = $dt->getTimestamp();
-              $now  = time();
-              $diff = $now - $time;
-
-              if ($diff < 0) $diff = 0;
-
-              if ($diff < 60) {
-                  return "just now";
-              } elseif ($diff < 3600) {
-                  $m = floor($diff / 60);
-                  return "$m minute" . ($m > 1 ? "s" : "") . " ago";
-              } elseif ($diff < 86400) {
-                  $h = floor($diff / 3600);
-                  return "$h hour" . ($h > 1 ? "s" : "") . " ago";
-              } elseif ($diff < 604800) {
-                  $d = floor($diff / 86400);
-                  return "$d day" . ($d > 1 ? "s" : "") . " ago";
-              } else {
-                  return $dt->format("M d, Y");
-              }
-            }
+            
             
             
           ?>
@@ -300,7 +307,7 @@ d, Y');
               </a>
               <div class="post-card-author">
                 <?php if ($post_author_image !== null): ?>
-                <img src="../images/users/<?= $post_author_image ?>" alt="" />
+                  <img src="../images/users/<?= $post_author_image ?>" alt="" />
                 <?php endif; ?>
                 <?= $post_author_fullname ?>
               </div>

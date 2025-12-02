@@ -1,12 +1,12 @@
-<!-- header.php  -->
-
 <?php
+
+    require_once __DIR__ . '/../../app/errors.php';
+    // require_once __DIR__ . '/../../pages/error.php';
 
     // require './config/db.php';
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
-    
     
     $role = '';
 
@@ -15,21 +15,16 @@
 
         switch ($role_id) {
             case 1:
-                # code...
                 $role = 'admin';
                 break;
             case 2:
-                # code...
                 $role = 'moderator';
                 break;
             case 3:
-                # code...
                 $role = 'author';
                 break;
             
             default:
-                # code...
-
                 break;
         }
     }
@@ -106,3 +101,16 @@
         </div>
     </div>
 </header>
+
+
+<?php if (!empty($_SESSION['error'])): ?>
+  <div class="flash flash-error"><?= $_SESSION['error'] ?></div>
+
+<?php unset($_SESSION['error']); 
+endif; ?>
+
+<?php if (!empty($_SESSION['success'])): ?>
+  <div class="flash flash-success"><?= $_SESSION['success'] ?></div>
+
+<?php unset($_SESSION['success']); 
+endif; ?>

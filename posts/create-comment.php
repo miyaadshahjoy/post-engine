@@ -2,6 +2,7 @@
 
   # Database Connection
   require '../config/db.php';
+  require '../app/errors.php';
 
   if(session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -16,7 +17,9 @@
     $post_id = $_POST['post_id'];
 
     if(empty($comment)):
-      die("⭕ Comment cannot be empty");
+      flash_error("⭕ Comment cannot be empty");
+      header ("Location: $_SERVER[HTTP_REFERER]");
+      exit();
     endif;
 
     # Query 
@@ -39,7 +42,9 @@
     endif;
 
     // header("Location: http://localhost/post-engine/posts/post.php?id=$post_id");
+    flash_success("✅ Comment submitted successfully and is pending approval.");
     header ("Location: $_SERVER[HTTP_REFERER]");
+    exit();
 
   endif;
 

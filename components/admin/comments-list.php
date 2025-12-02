@@ -49,14 +49,16 @@
             <td><?= $comment_created_at ?></td>
             <td><?= $commented_by ?></td>
             <td>
-                <div class="actions">
-                    <?php if ($comment_status === 'pending'): ?>
-                        <a href="../components/admin/publish-comment.php?id=<?= $comment_id?>" class="button button-success" >Approve</a>
-                    <?php endif; ?>
-                    <a href="" class="button button-delete">Delete</a>
+              <div class="actions">
+                  <?php if ($comment_status === 'pending'): ?>
+                    <a href="../components/admin/approve-comment.php?id=<?= $comment_id?>" class="button button-success" >Approve</a>
+                  <?php endif; ?>
+                  <?php if ($comment_status !== 'removed'): ?>
+                    <a href="../components/admin/delete-comment.php?id=<?= $comment_id?>" class="button button-delete">Delete</a>
+                  <?php endif; ?>
 
 
-                </div>
+              </div>
             </td>
         </tr>
     <?php endforeach; ?>

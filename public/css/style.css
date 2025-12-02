@@ -31,7 +31,7 @@ body {
   height: 100vh;
 }
 section {
-  margin: 96px;
+  margin-bottom: 96px;
 }
 h1,
 h2,
@@ -65,7 +65,9 @@ a:visited {
 
 /* BUTTON STYLES  */
 
-.button {
+.button:link,
+.button:visited {
+  display: inline-block;
   color: #fff;
   font-size: 0.9375rem;
   text-transform: capitalize;
@@ -576,7 +578,8 @@ td a {
   flex-wrap: wrap;
 }
 
-.button-pagination {
+.button-pagination:link,
+.button-pagination:visited {
   padding: 0.5rem 1rem;
   border-radius: 6px;
   background: #fff;
@@ -589,7 +592,7 @@ td a {
 
 .button-pagination:hover {
   background: var(--accent-color);
-  border-color: var(--primary-color);
+  border-color: var(--accent-color);
   color: var(--text-color);
   transform: translateY(-2px);
 }
@@ -696,6 +699,51 @@ td a {
 .comment-date {
   font-size: 12px;
   color: var(--light-gray-color);
+}
+
+/* POPUP STYLES  */
+.flash {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 12px 18px;
+  border-radius: 8px;
+  color: white;
+  z-index: 9999;
+  animation: fadeIn 0.2s ease, fadeOut 0.5s ease 3s forwards;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.2);
+}
+
+.flash-error {
+  background: #f03e3e;
+}
+
+.flash-success {
+  background: #40c057;
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+.error {
+  max-width: 600px;
+  margin: 120px auto;
+  padding: 40px;
+  text-align: center;
+  border-radius: 12px;
+  background: #fff5f5;
+  border: 2px solid #ffe3e3;
+}
+.error h1 {
+  color: #f03e3e;
+  margin-bottom: 16px;
+}
+.error p {
+  margin-bottom: 48px;
 }
 
 /* FLEX BOX  */
