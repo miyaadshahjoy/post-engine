@@ -1,7 +1,7 @@
 <?php 
   # Database Connection
   require('./../config/db.php');
-  require '../app/errors.php';
+  // require '../app/errors.php';
 
 
   if ($_SERVER['REQUEST_METHOD'] === 'GET'):
